@@ -46,4 +46,4 @@ Full API reference is available at http://usebobik.com/sdk/java
 5. A sample test application (admittedly, very primitive) is in `sample_app`
 
 ### Bugs?
-Submit them here on GitHub
+Submit them here on GitHub: https://github.com/emirkin/bobik_java_sdk/issues
