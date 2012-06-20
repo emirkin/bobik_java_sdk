@@ -23,7 +23,8 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * Provides interface to Bobik API.
+ * Provides programmatic interface to Bobik API.
+ * Download this SDK from <a href="https://github.com/emirkin/bobik_java_sdk">Bobik SDK on GitHub</a>
  * <br>
  * Format of request and response objects is explained in detail at <a href="http://usebobik.com/api/docs#func_ref">Bobik API Docs</a>
  *
