@@ -1,11 +1,14 @@
-== Bobik SDK for Java
+## Bobik SDK for Java
 
 This is a community-supported SDK for interacting with Bobik.
 
+### Installing
 
-== Using Bobik SDK
-1. Include `bobik-1.0.jar` located in the `lib` directory
-2. Start scraping!
+Include `bobik-1.0.jar` located in the `lib` directory
+
+
+### Using
+Here's a quick example to get you started.
 
 ```java
     BobikClient bobik = new BobikClient("YOUR_AUTH_KEY");
@@ -32,9 +35,9 @@ This is a community-supported SDK for interacting with Bobik.
     });
 ```
 
-3. Full API reference is available at https://github.com/emirkin/bobik_java_sdk/tree/master/docs
+Full API reference is available at http://usebobik.com/sdk/java
 
-== For Contributing Developers
+### Contributing
 
 1. Write to support@usebobik.com to become a collaborator.
 2. The SDK source is fully contained within the `bobik.jar` directory.
@@ -42,5 +45,5 @@ This is a community-supported SDK for interacting with Bobik.
 4. Javadoc goes to `docs`
 5. A sample test application (admittedly, very primitive) is in `sample_app`
 
-== Bugs?
-Submit them here on GitHub
+### Bugs?
+Submit them here on GitHub: https://github.com/emirkin/bobik_java_sdk/issues
