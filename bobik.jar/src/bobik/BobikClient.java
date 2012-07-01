@@ -38,7 +38,7 @@ import java.util.concurrent.*;
     for (String url : new String[]{"amazon.com", "google.com"})
         request.accumulate("urls", url);
     for (String query : new String[]{"//a/@href", "return $('.logo').length"})
-        request.accumulate("queries", query_set);
+        request.accumulate("queries", query);
 
     Job job = bobik.scrape(request, new JobListener() {
         public void onSuccess(JSONObject scraped_data) {
