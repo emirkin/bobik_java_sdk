@@ -32,17 +32,32 @@ public class BobikHelper {
      */
     public static List<JSONObject> transpose(JSONObject x) throws ArrayIndexOutOfBoundsException, JSONException {
         List<JSONObject> results = null;
+        // First pass is for initializing variables
+        int max_len = 0;
         for (Iterator i=x.keys(); i.hasNext(); ) {
             String key = (String)i.next();
             JSONArray values = x.getJSONArray(key);
-            // Fill array with empty container objects if this is the first pass
-            if (results == null) {
-                results = new ArrayList<JSONObject>(values.length());
-                for (int z=0; z<values.length(); z++)
-                    results.add(new JSONObject());
+            if (values.length() > max_len)
+                max_len = values.length();
+        }
+        // Fill array with empty container objects
+        if (results == null) {
+            results = new ArrayList<JSONObject>(max_len);
+            for (int z=0; z<max_len; z++)
+                results.add(new JSONObject());
+        }
+        // Now, populate the array with real results, inserting null when no data is available upon transposition
+        for (Iterator i=x.keys(); i.hasNext(); ) {
+            String key = (String)i.next();
+            JSONArray values = x.getJSONArray(key);
+            for (int z=0; z<values.length(); z++) {
+                Object val = null;
+                try {
+                    val = values.get(z);
+                } catch (JSONException e) {
+                }
+                results.get(z).put(key, val);
             }
-            for (int z=0; z<values.length(); z++)
-                results.get(z).put(key, values.get(z));
         }
         return results;
 
