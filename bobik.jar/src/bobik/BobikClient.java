@@ -54,6 +54,10 @@ import java.util.concurrent.*;
                 System.err.println("Error for job " + job.id() + ": " + s);
         }
     });
+
+    // Block to prevent the thread from exiting along with the unfinished scraping job.
+    // Not needed if the thread will remain active regardless.
+    job.waitForCompletion();
  * }
  * </pre>
  * @author Eugene Mirkin
@@ -91,6 +95,26 @@ public class BobikClient {
 
 
     /**
+     * Called to extract errors from a Bobik response and pass them on to user's listener
+     * @param bobikResponse
+     * @param listener
+     * @throws BobikException not common, thrown on surprise parse errors
+     */
+    protected void processErrors(JSONObject bobikResponse, JobListener listener) throws JSONException {
+        try {
+            JSONArray errors = bobikResponse.getJSONArray(BobikConstants.ERROR_TOKEN_LABEL);
+            if (errors != null && errors.length() > 0) {
+                Collection<String> messages = new ArrayList<String>(errors.length());
+                for (int i=0; i<errors.length(); i++)
+                    messages.add(errors.getString(i));
+                listener.onErrors(messages);
+            }
+        } catch (JSONException e) {
+            return;
+        }
+    }
+
+    /**
      * Kicks off an asynchronous scraping job and returns a proxy object.
      * This proxy is only for added convenience of monitoring/cancelling the job.
      * The listener you pass as a parameter does all this and more already.
@@ -105,6 +129,7 @@ public class BobikClient {
      */
     public Job scrape(JSONObject request, final JobListener listener) throws BobikException, IOException, JSONException, ExecutionException, InterruptedException {
         JSONObject job_submission = callAPI(request, "POST");
+        processErrors(job_submission, listener);
         final long startTime = System.currentTimeMillis();
         final String job_id = getJobIdOrFail(job_submission);
         final Job job = new Job() {
@@ -238,27 +263,6 @@ public class BobikClient {
         return job;
     }
 
-
-    /**
-     * Called to Extract errors from a Bobik response and pass them on to user's listener
-     * @param bobikResponse
-     * @param listener
-     * @throws BobikException not common, thrown on surprise parse errors
-     */
-    protected void processErrors(JSONObject bobikResponse, JobListener listener) throws JSONException {
-        JSONArray errors;
-        try {
-            errors = bobikResponse.getJSONArray(BobikConstants.ERROR_TOKEN_LABEL);
-        } catch (JSONException e) {
-            return;
-        }
-        if (errors != null && errors.length() > 0) {
-            Collection<String> messages = new ArrayList<String>(errors.length());
-            for (int i=0; i<errors.length(); i++)
-                messages.add(errors.getString(i));
-            listener.onErrors(messages);
-        }
-    }
 
     /**
      * Retrieves the job id from the submission object
