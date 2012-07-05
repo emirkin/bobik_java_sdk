@@ -1,10 +1,12 @@
 ## Bobik SDK for Java
 
-This is a community-supported SDK for interacting with Bobik.
+This is a community-supported SDK for web scraping in Java.
 
 ### Installing
 
-Include `bobik-1.0.jar` located in the `lib` directory
+Include `bobik-1.0.jar` located in the `lib` directory.
+If you are scraping from an Android application, this is enough.
+If you are using a vanilla Java environment, you might need to include `HttpComponents` and an `org.json` packages (see http://usebobik.com/sdk).
 
 
 ### Using
