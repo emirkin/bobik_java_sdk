@@ -1,6 +1,6 @@
-## Bobik SDK for Java
+## Web Scraping in Java using Bobik
 
-This is a community-supported SDK for web scraping in Java.
+This is a community-supported Bobik SDK for web scraping in Java.
 
 ### Installing
 
